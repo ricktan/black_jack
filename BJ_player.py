@@ -12,6 +12,7 @@ class player(BJ_card.hand):
         self.isBusted = False
         self.isHit = False
         self.isSurrender = False
+        self.is21 = False
         
     def __str__(self):
         rep = super(player, self).__str__() 
@@ -19,8 +20,8 @@ class player(BJ_card.hand):
         return rep
     
     def answer(self,ques):
-        ans = str(input(ques))
-        return str(ans)
+        ans = input(ques)
+        return ans
         
     def ask_number(self,ques,low,high):
         question = str(ques) + "(" + str(low) + "-" + str(high) + "):"
@@ -34,12 +35,12 @@ class player(BJ_card.hand):
         
         return num
         
-    def win(self,theGame):
-        print (str(self.name) + "wins") 
+    def win(self):
+        print (str(self.name) + " wins") 
         
-    def lose(self,theGame):
+    def lose(self):
         self.surrender()
-        print (str(self.name) + "loses") 
+        print (str(self.name) + " loses") 
         
     def stand(self):
         self.isStand = True
@@ -52,12 +53,17 @@ class player(BJ_card.hand):
             if not each.isFaceUp:
                 self.flip(each)
                 self.discard(each)
-        print (self)
         self.isSurrender = True
     
     def is_busted(self):
         if self.count > 21:
             self.isBusted = True
+            return True
+        else:
+            return False
+    
+    def lucky(self):
+        self.is21 = True
     
 class dealer(BJ_card.hand):
     """ the dealer of the game"""

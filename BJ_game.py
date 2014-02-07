@@ -20,6 +20,11 @@ class BJ_game(object):
     def add(self,onePlayer):
         if onePlayer not in self.userList:
             self.userList.append(onePlayer)
+    
+    def remove(self,loser):
+        if loser in self.userList:
+            self.userList.remove(loser)
+            
         
     def start(self):
         for user in self.userList:
@@ -32,27 +37,59 @@ class BJ_game(object):
         for user in self.userList:
             ques = "what to do," + str(user.name) + "? (stand/hit/surrender):"
             ans = user.answer(ques)
-            while ans and not user.isBusted :
+            while ans and not user.isBusted and not user.isStand and not user.is21 :
                 if ans == "stand":
                     user.stand()
-                    break
-                                      
+                    
                 elif ans == "hit":
                     user.hit()
-                    print (str(user.count))
                     self.theDeck.deal(user)
                     print (user)
+                    
                     if user.is_busted():
                         user.lose()
-                        break
+                        
+                    elif user.count == 21:
+                        user.lucky()
+                        
+                    else:
+                        ques = "what to do," + str(user.name) + "? (stand/hit/surrender):"
+                        ans = user.answer(ques)
                     
                 elif ans == "surrender":
                     user.surrender()
                     
-                ques = "what to do," + str(user.name) + "? (stand/hit/surrender):"
-                ans = user.answer(ques)
-            
-            
+                else:
+                    print ("I dont understand your command")
+                
+
+        # if there is no user in the user list, flip the card of dealer
+        # else count the point and the one with value wins the game
+        
+        if not self.userList:
+            self.theDealer.win()
+        elif len(self.userList) == 1:
+            if self.userList[0].isBusted:
+                self.theDealer.win()
+            else:
+                self.theDealer.flip(self.theDealer.holdCard[1])
+                print(self.theDealer.count)
+                
+        elif len(self.userList) > 1:
+            max = 0
+            winner = None
+            for user in self.userList:
+                if user.count > max and not user.isBusted:
+                    max = user.count
+                    winner = user
+            if max > 0: # find the maximum one
+                winner.win()
+            else:
+                self.theDealer.win()
+                
+if __name__ == "__main__":
+    print("You ran this module directly (and did not 'import' it).")
+    input("\n\nPress the enter key to exit.")               
             
             
             

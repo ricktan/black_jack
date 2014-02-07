@@ -30,7 +30,7 @@ class hand(object):
         allCard = ""
         if self.holdCard:
             for oneCard in self.holdCard:
-                allCard += str(oneCard)+"\t"
+                allCard += " (" + str(oneCard)+")"
             return allCard
         else:
             return str(None)
@@ -59,7 +59,7 @@ class hand(object):
             if cards.isFaceUp:
                 return False
             else:
-                print (cards)
+                print ("flipping the card facing down up")
                 return True
             
     def give(self,card,other_hand):

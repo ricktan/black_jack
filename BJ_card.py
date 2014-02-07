@@ -1,10 +1,4 @@
-import sys
-# import the sys paths if there isnt any
-module_path = 'C:\\Users\\Tan\\Dropbox\\guess_song'
 
-if module_path not in sys.path:
-    sys.path.append(module_path)
-    
 import cards
 
 class card(cards.card):
@@ -16,10 +10,9 @@ class card(cards.card):
         if rank in ['10','J','Q','K']:
             rank = 10
         elif rank == 'A':
-            rank = 1
+            rank = 10
         else:
             rank = card.rank.index(rank) + 1
-        print (rank)
         return int(rank)
 
         
@@ -28,10 +21,19 @@ class hand(cards.hand):
     @property
     def count(self):
         value = 0
-        print ("I am checking")
+        ace = False
+        # check if there is A in the card list:
         for each in self.holdCard:
-            value += each.amount
-            print (value)
+            if each.rank == 'A':
+                for bigRank in ['10','J','Q','K']:
+                    if bigRank in self.holdCard:
+                        ace = True
+        
+            if ace:
+                value += 1
+            else:
+                value += each.amount
+            #print (value)
         return value
             
         

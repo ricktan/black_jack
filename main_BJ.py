@@ -1,6 +1,6 @@
 import sys
 # import the sys paths if there isnt any
-module_path = 'C:\\Users\\Tan\\Dropbox\\guess_song'
+module_path = 'C:\\Users\\Tan\\Dropbox\\black_jack'
 
 if module_path not in sys.path:
     sys.path.append(module_path)
@@ -28,8 +28,6 @@ for num in range(player_num):
     elif num == 4:
         player5 = curplayer
     thisGame.add(curplayer)
-    
-print (thisGame)
 
 thisGame.start()
 
@@ -57,18 +55,3 @@ thisGame.start()
 
 
 
-
-
-# theDeck = cards.deck()
-# theDeck.generate()
-# print ("All kinds of cards are listed: " + str(theDeck))
-# theDeck.shuffle()
-# print ("All kinds of cards are listed: " + str(theDeck))
-# 
-# myHand = cards.hand()
-# yourHand = cards.hand()
-# 
-# theDeck.deal(myHand,2)
-# theDeck.deal(yourHand,2)
-# print("Cards that I have are like: " + str(myHand))
-# print("Cards that You have are like: " + str(yourHand))
