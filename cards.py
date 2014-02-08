@@ -59,7 +59,8 @@ class hand(object):
             if cards.isFaceUp:
                 return False
             else:
-                print ("flipping the card facing down up")
+                # print ("flipping the card facing down up")
+                cards.isFaceUp = True
                 return True
             
     def give(self,card,other_hand):

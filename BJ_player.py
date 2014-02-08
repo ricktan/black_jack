@@ -13,6 +13,7 @@ class player(BJ_card.hand):
         self.isHit = False
         self.isSurrender = False
         self.is21 = False
+        self.isGreedy = False
         
     def __str__(self):
         rep = super(player, self).__str__() 
@@ -58,15 +59,29 @@ class player(BJ_card.hand):
     def is_busted(self):
         if self.count > 21:
             self.isBusted = True
-            return True
-        else:
-            return False
+            print (self.name + ",you are busted")
+            
+        elif self.count == 21:
+            self.is21 = True
     
     def lucky(self):
         self.is21 = True
+        
+    def max_card(self):
+        if len(self.holdCard) >= 5:
+            print ("Sorry, you can have 5 cards at most")
+            return True
+            self.isGreedy = True
+        else:
+            return False
     
-class dealer(BJ_card.hand):
+class dealer(player):
     """ the dealer of the game"""
+    def flip_down(self):
+        if self.holdCard:
+            for card in self.holdCard:
+                card.isFaceUp = False
+        
     def flip_the_card(self):
         self.flip(self.holdCard[0])
         

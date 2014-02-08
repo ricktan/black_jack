@@ -25,7 +25,7 @@ class hand(cards.hand):
         # check if there is A in the card list:
         for each in self.holdCard:
             if each.rank == 'A':
-                for bigRank in ['10','J','Q','K']:
+                for bigRank in ['10','J','Q','K','A']:
                     if bigRank in self.holdCard:
                         ace = True
         
