@@ -4,50 +4,37 @@ import BJ_card
 class player(BJ_card.hand):
     """ A player for the game"""
     # attributes
-    def __init__(self,name,score = 0):
+    def __init__(self,name,score = 100,bet = 10):
         super(player, self).__init__()
         self.name = str(name)
         self.score = score
-        self.isStand = False
+        self.bet = bet # the bet you have 
         self.isBusted = False
-        self.isHit = False
+        self.isStand = False
         self.isSurrender = False
         self.is21 = False
-        self.isGreedy = False
+        self.isGreedy = False #wants to get more than 5 cards
+
         
     def __str__(self):
         rep = super(player, self).__str__() 
-        rep = str(self.name) + ":" + rep
+        rep = str(self.name) + ":" + rep + " " + str(self.score)
         return rep
     
     def answer(self,ques):
         ans = input(ques)
         return ans
         
-    def ask_number(self,ques,low,high):
-        question = str(ques) + "(" + str(low) + "-" + str(high) + "):"
-        num = input(question)
-        low = int(low)
-        high = int(high)
-        
-        while num not in range(low,high):
-            question = str(ques) + "(" + str(low) + "-" + str(high) + "):"
-            num = input(question)
-        
-        return num
-        
     def win(self):
-        print (str(self.name) + " wins") 
+        win = self.bet * 2
+        self.score += win
+        print (str(self.name) + " gets $" + str(win) + "! Good job :)") 
         
     def lose(self):
-        self.surrender()
-        print (str(self.name) + " loses") 
+        lose = self.bet
+        self.score -= lose
+        print (str(self.name) + " loses $" + str(lose) + "!:(") 
         
-    def stand(self):
-        self.isStand = True
-    
-    def hit(self):
-        self.isHit = True
         
     def surrender(self):
         for each in self.holdCard:
@@ -55,17 +42,17 @@ class player(BJ_card.hand):
                 self.flip(each)
                 self.discard(each)
         self.isSurrender = True
+        self.lose()
     
     def is_busted(self):
         if self.count > 21:
             self.isBusted = True
             print (self.name + ",you are busted")
+            self.lose()
             
         elif self.count == 21:
             self.is21 = True
-    
-    def lucky(self):
-        self.is21 = True
+
         
     def max_card(self):
         if len(self.holdCard) >= 5:
@@ -74,6 +61,13 @@ class player(BJ_card.hand):
             self.isGreedy = True
         else:
             return False
+            
+    def bet(self,amount):
+        if amount <= self.score:
+            self.score -= amount
+        else:
+            print ("All in!")
+            self.score = 0
     
 class dealer(player):
     """ the dealer of the game"""
@@ -84,6 +78,14 @@ class dealer(player):
         
     def flip_the_card(self):
         self.flip(self.holdCard[0])
+        
+    def win(self):
+        print ("Dealer wins :D")
+        
+    def lose(self):
+        self.score = 0
+        
+        
         
 if __name__ == "__main__":
     print("You ran this module directly (and did not 'import' it).")

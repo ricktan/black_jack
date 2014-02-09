@@ -96,7 +96,12 @@ class deck(hand):
                 self.holdCard.remove(self.holdCard[i])
                 
         else:
-            print ("Sorry, there are not enough card in the deck")
+            print ("Sorry, there are not enough card")
+            for remain in self.holdCard:
+                self.discard(remain)
+
+            self.generate()
+            
         
 if __name__ == "__main__":
     print("You ran this module directly (and did not 'import' it).")
